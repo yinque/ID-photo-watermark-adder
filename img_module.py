@@ -1,3 +1,4 @@
+
 import math
 
 from PIL import Image, ImageDraw, ImageFont
@@ -8,14 +9,14 @@ COLOR_RGB_WHITE = (255, 255, 255)
 COLOR_RGB_BLACK = (0, 0, 0)
 
 
-def make_watermark(text,
-                   size: tuple,
-                   space: tuple=None,
-                   angle=0,
-                   alpha=255,
-                   font_path="arial.ttf",
-                   font_size=24,
-                   font_color=COLOR_RGB_BLACK) -> Image.Image:
+def __make_watermark(text,
+                     size: tuple,
+                     space: tuple=None,
+                     angle=0,
+                     alpha=255,
+                     font_path="arial.ttf",
+                     font_size=24,
+                     font_color=COLOR_RGB_BLACK) -> Image.Image:
     if not space:
         space = (font_size, font_size)
     # 创建新的图像
@@ -55,7 +56,9 @@ def make_watermark(text,
 
 
 def add_watermark(img: Image.Image, text, **kwargs):
-    watermark_img = make_watermark(text ,img.size,**kwargs)
-    img.paste(watermark_img, (0,0), watermark_img)
+    watermark_img = __make_watermark(text, img.size, **kwargs)
+    img = img.copy()
+    img.paste(watermark_img, (0, 0), watermark_img)
+    return img
 
 
